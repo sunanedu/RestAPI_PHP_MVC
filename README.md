@@ -253,11 +253,21 @@ CREATE TABLE `rate_limits` ( `id` INT AUTO_INCREMENT PRIMARY KEY, `user_id` INT 
 
 ```
 RewriteEngine On
+
+# อนุญาตให้เว็บอื่นเรียกใช้ API ของเราได้ (CORS)
 Header set Access-Control-Allow-Origin "*"
 Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
 Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# จัดการกับ OPTIONS request ที่เบราว์เซอร์ส่งมาถามก่อน
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ $1 [R=200,L]
+
+# ส่งค่า Authorization header ไปให้ PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# ส่งทุก request ที่หาไฟล์ไม่เจอไปที่ index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

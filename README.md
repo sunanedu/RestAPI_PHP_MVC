@@ -251,7 +251,7 @@ CREATE TABLE `rate_limits` ( `id` INT AUTO_INCREMENT PRIMARY KEY, `user_id` INT 
 
 #### `public/.htaccess`
 
-```apache
+```bash
 RewriteEngine On
 
 # อนุญาตให้เว็บอื่นเรียกใช้ API ของเราได้ (CORS)

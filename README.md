@@ -52,7 +52,8 @@
 
 * เปิดไฟล์ขึ้นมาแล้วเพิ่มโค้ดนี้เข้าไปที่ด้านล่างสุด:
 
-```
+```bash
+
 #คงไว้ให้สามารถใช้ localhost ได้ปกติเพื่อใช้งาน phpmyadmin
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs"
@@ -79,7 +80,7 @@
 
 * เพิ่มบรรทัดนี้เข้าไปที่ด้านล่างสุด:
 
-```
+```bash
 127.0.0.1   localhost
 127.0.0.1   one.com
 ```
@@ -94,7 +95,7 @@
 
 * เปิด **Command Prompt** แล้วพิมพ์คำสั่งตามลำดับนี้:
 
-```
+```bash
 cd C:\xampp\htdocs
 mkdir v.3_api1
 cd v.3_api1
@@ -141,7 +142,7 @@ type nul > Review.php
 
 * นำโค้ดนี้ไปรันใน **phpMyAdmin** และบันทึกลงในไฟล์ `database.sql`
 
-```
+```sql
 -- Database: `api_db`
 CREATE DATABASE IF NOT EXISTS `api_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `api_db`;
@@ -191,7 +192,7 @@ CREATE TABLE `rate_limits` ( `id` INT AUTO_INCREMENT PRIMARY KEY, `user_id` INT 
 
 * เปิดไฟล์ `C:\xampp\htdocs\v.3_api1\composer.json` แล้วใส่โค้ดนี้เข้าไป:
 
-  ```
+  ```json
   {
       "require": {
           "firebase/php-jwt": "^6.10"
@@ -212,7 +213,7 @@ CREATE TABLE `rate_limits` ( `id` INT AUTO_INCREMENT PRIMARY KEY, `user_id` INT 
 
 * รันคำสั่ง:
 
-  ```
+  ```bash
   composer install
   ```
 
@@ -264,7 +265,7 @@ RewriteRule ^ index.php [QSA,L]
 
 #### `public/index.php`
 
-```
+```php
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -291,7 +292,7 @@ $router->dispatch();
 
 #### `config/config.php`
 
-```
+```php
 <?php
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');
@@ -306,7 +307,7 @@ define('JWT_AUDIENCE', 'one.com');
 
 #### `src/Core/Database.php`
 
-```
+```php
 <?php
 namespace App\Core;
 use PDO;
@@ -334,7 +335,7 @@ class Database {
 
 #### `src/Core/Router.php` (ฉบับแก้ไขสมบูรณ์)
 
-```
+```php
 <?php
 namespace App\Core;
 
@@ -405,7 +406,7 @@ class Router {
 
 #### `src/Middlewares/AuthMiddleware.php`
 
-```
+```php
 <?php
 namespace App\Middlewares;
 use Firebase\JWT\JWT;
@@ -477,7 +478,7 @@ class AuthMiddleware {
 
 #### `src/Middlewares/RateLimiter.php`
 
-```
+```php
 <?php
 namespace App\Middlewares;
 use App\Core\Database;
@@ -548,7 +549,7 @@ class RateLimiter {
 
 ##### `src/Controllers/AuthController.php`
 
-```
+```php
 <?php
 namespace App\Controllers;
 
@@ -618,7 +619,7 @@ class AuthController {
 
 ##### `src/Models/User.php`
 
-```
+```php
 <?php
 namespace App\Models;
 use App\Core\Database;
@@ -708,7 +709,7 @@ class User {
 
 ##### `src/Controllers/UserController.php`
 
-```
+```php
 <?php
 namespace App\Controllers;
 use App\Models\User;
@@ -775,7 +776,7 @@ _(โค้ดสำหรับทรัพยากรอื่นๆ จะ�
 
 ไฟล์นี้จะเชื่อมโยงทุก Endpoint เข้ากับ Controller ที่ถูกต้อง
 
-```
+```php
 <?php
 // PUBLIC ROUTES
 $router->post('/auth/login', 'AuthController@login', ['App\Middlewares\RateLimiter']);

@@ -53,11 +53,13 @@
 * เปิดไฟล์ขึ้นมาแล้วเพิ่มโค้ดนี้เข้าไปที่ด้านล่างสุด:
 
 ```
+#คงไว้ให้สามารถใช้ localhost ได้ปกติเพื่อใช้งาน phpmyadmin
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs"
     ServerName localhost
 </VirtualHost>
 
+#สร้างใหม่ โดยกำหนดชื่อโดเมนและพาธ ของโปรเจ็ค ปกติจะอยู่ที่ /xampp/htdocs/
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs/v.3_api1/public"
     ServerName one.com
